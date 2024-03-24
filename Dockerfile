@@ -52,10 +52,14 @@ RUN conda --version
 WORKDIR /ws
 RUN git clone https://github.com/baishibona/universal_manipulation_interface.git
 WORKDIR /ws/universal_manipulation_interface
-
+# ADD requirements.txt /ws/universal_manipulation_interface
+RUN sudo apt-get update
 RUN conda env create -f conda_environment.yaml
-WORKDIR /ws/universal_manipulation_interface/example_demo_session
-RUN wget --recursive --no-parent --no-host-directories --cut-dirs=2 --relative --reject="index.html*" https://real.stanford.edu/umi/data/example_demo_session/
-ADD run.sh /ws/universal_manipulation_interface
+
+# RUN python3 -m pip install -r requirements.txt
+WORKDIR /ws/example_demo_session
+# RUN wget --recursive --no-parent --no-host-directories --cut-dirs=2 --relative --reject="index.html*" https://real.stanford.edu/umi/data/example_demo_session/
+# ADD run.sh /ws/universal_manipulation_interface
 WORKDIR /ws/universal_manipulation_interface
-RUN sudo chmod a+x run.sh
+ADD dataset.zarr.zip /ws/example_demo_session
+# RUN sudo chmod a+x run.sh
